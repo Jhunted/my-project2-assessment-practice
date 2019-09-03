@@ -1,33 +1,17 @@
-var Todo = require('../models/todo');
+var Todo = require('../models/todos');
 
 module.exports = {
-    index,
-    show,
-    new:newTodo,
-    create,
-    delete: deleteTodo,
-    edit,
-    update
+  index,
+  create,
+  delete: deleteTodo,
 };
 
-function update(req, res) {
-    req.body.done = !!req.body.done;
-    Todo.update(req.params.id, req.body);
-    res.redirect(`/todos/${req.params.id}`);
-  }
-  
-  function edit(req, res) {
-    var todo = Todo.getOne(req.params.id);
-    res.render('todos/edit', {
-      todo,
-      todoIdx: req.params.id
-    });
-  }
   
   function deleteTodo(req, res) {
     Todo.deleteOne(req.params.id);
     res.redirect('/');
   }
+
   
   function create(req, res) {
     console.log(req.body);
@@ -36,16 +20,6 @@ function update(req, res) {
     res.redirect('/');
   }
   
-  function newTodo(req, res) {
-    res.render('todos/new');
-  }
-  
-  function show(req, res) {
-    res.render('todos/show', {
-      todo: Todo.getOne(req.params.id),
-      todoNum: parseInt(req.params.id) + 1
-    });
-  }
   
   function index(req, res) {
     res.render('index', {
